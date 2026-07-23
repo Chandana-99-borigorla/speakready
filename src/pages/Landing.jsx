@@ -10,7 +10,6 @@ import {
 
 // ─── Hero ─────────────────────────────────────────────────────
 
-
 const Hero = () => (
   <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16 bg-[#0B0F19]">
     {/* Ken Burns background image */}
@@ -67,8 +66,6 @@ const Hero = () => (
   </section>
 )
 
-
-
 // ─── Who It's For ─────────────────────────────────────────────
 const WhoItsFor = () => {
   const audiences = [
@@ -106,28 +103,28 @@ const WhoItsFor = () => {
   )
 }
 
-// ─── AI Coaches ────────────────────────────────────────────────
+// ─── Practice Modes ─────────────────────────────────────────
 const Coaches = () => {
-  const coaches = [
+  const modes = [
     {
-      icon: Briefcase, title: 'Interview Coach',
-      desc: 'Practice real interview questions and get feedback on clarity, confidence, and pacing.',
-      features: ['Common HR & tech questions', 'Fluency scoring', 'Instant tips'],
+      title: 'Interview Practice',
+      desc: 'Answer real questions out loud and think on your feet.',
+      img: 'https://i.pinimg.com/736x/ec/5a/cf/ec5acf970d14f0ca2874f7954181805b.jpg',
     },
     {
-      icon: Users, title: 'Group Discussion Coach',
-      desc: 'Simulate GD scenarios and learn to structure your points quickly under pressure.',
-      features: ['Topic-based practice', 'Structuring feedback', 'Confidence tracking'],
+      title: 'Group Discussion',
+      desc: 'Frame your point clearly and jump into a topic with confidence.',
+      img: 'https://i.pinimg.com/736x/03/f4/b5/03f4b5d47e123ff55d2d04c50ab70ad7.jpg',
     },
     {
-      icon: Presentation, title: 'Presentation Coach',
-      desc: 'Rehearse how you explain ideas — pacing, filler words, and structure.',
-      features: ['Pacing analysis', 'Filler-word detection', 'Clarity score'],
+      title: 'Presentations',
+      desc: 'Rehearse your pitch until it stops feeling scripted.',
+      img: 'https://i.pinimg.com/736x/15/30/3d/15303db09e01eef47d93232e29248d7e.jpg',
     },
     {
-      icon: MessageSquare, title: 'Daily Conversation Coach',
-      desc: 'Casual prompts to build natural, everyday spoken fluency.',
-      features: ['Free-form prompts', 'Grammar feedback', 'Vocabulary suggestions'],
+      title: 'Everyday Conversation',
+      desc: 'Speak naturally, not just textbook-correct.',
+      img: 'https://i.pinimg.com/1200x/53/cc/0e/53cc0e3857767d164fe5932a797e29fb.jpg',
     },
   ]
 
@@ -135,31 +132,36 @@ const Coaches = () => {
     <section id="features" className="py-24 bg-[#080b14]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <span className="text-cyan-400 text-sm font-semibold uppercase tracking-widest">AI Coaches</span>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mt-3">One app, every scenario</h2>
+          <span className="text-cyan-400 text-sm font-semibold uppercase tracking-widest">Practice Modes</span>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mt-3">Practice for the moment you're preparing for</h2>
           <p className="text-gray-400 mt-4 max-w-xl mx-auto">
-            Powered by Gemini — each coach is tuned for a specific kind of spoken English.
+            Pick a mode, speak out loud, and get comfortable before it counts.
           </p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {coaches.map(({ icon: Icon, title, desc, features }) => (
-            <div key={title}
-              className="bg-white/5 border border-white/10 hover:border-indigo-500/40 rounded-2xl p-6 transition-all duration-200 hover:-translate-y-1 group">
-              <div className="w-12 h-12 bg-indigo-500/10 border border-indigo-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-indigo-500/20 transition-colors">
-                <Icon size={22} className="text-cyan-400" />
+          {modes.map(({ title, desc, img }, i) => (
+            <motion.div
+              key={title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.45, delay: i * 0.1 }}
+              className="relative rounded-2xl overflow-hidden border border-white/10 h-80 group cursor-pointer"
+            >
+              <img
+                src={img}
+                alt={title}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080b14] via-[#080b14]/40 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <h3 className="text-white font-bold text-lg mb-1">{title}</h3>
+                <p className="text-gray-300 text-sm leading-relaxed opacity-0 group-hover:opacity-100 max-h-0 group-hover:max-h-20 transition-all duration-300 overflow-hidden">
+                  {desc}
+                </p>
               </div>
-              <h3 className="text-white font-bold text-lg mb-2">{title}</h3>
-              <p className="text-gray-400 text-sm leading-relaxed mb-4">{desc}</p>
-              <ul className="flex flex-col gap-1.5">
-                {features.map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-gray-500 text-sm">
-                    <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -186,14 +188,23 @@ const HowItWorks = () => {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {steps.map(({ icon: Icon, title, desc }, i) => (
-            <div key={title} className="relative bg-white/5 border border-white/10 rounded-2xl p-6">
+            <motion.div
+              key={title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.45, delay: i * 0.1 }}
+              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.03 }}
+              className="relative bg-white/5 border border-white/10 hover:border-indigo-500/40 rounded-2xl p-6 cursor-pointer"
+            >
               <span className="text-indigo-500/30 font-bold text-4xl absolute top-4 right-5">{i + 1}</span>
               <div className="w-12 h-12 bg-indigo-500/10 border border-indigo-500/20 rounded-xl flex items-center justify-center mb-4">
                 <Icon size={22} className="text-cyan-400" />
               </div>
               <h3 className="text-white font-bold text-lg mb-2">{title}</h3>
               <p className="text-gray-400 text-sm leading-relaxed">{desc}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
