@@ -1,9 +1,11 @@
 // src/pages/Dashboard.jsx
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Mic, MessageSquare, Presentation, Coffee, TrendingUp, Flame, Clock, Award } from 'lucide-react'
 
 const Dashboard = () => {
+  const navigate = useNavigate()
   const [activeSection, setActiveSection] = useState('practice')
 
   const scrollTo = (id) => {
@@ -27,7 +29,6 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-[#0B0F19] pt-20 pb-16">
-      {/* Sticky mini-nav */}
       <div className="sticky top-16 z-30 bg-[#0B0F19]/90 backdrop-blur border-b border-white/5 mb-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex gap-6 py-3">
           {[
@@ -50,13 +51,11 @@ const Dashboard = () => {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Greeting */}
         <div className="mb-10">
           <h1 className="text-3xl font-bold text-white">Welcome back 👋</h1>
           <p className="text-gray-400 mt-1">Pick up where you left off, or start a fresh session.</p>
         </div>
 
-        {/* Practice Modes — the highlight */}
         <section id="practice" className="mb-16 scroll-mt-32">
           <h2 className="text-xl font-bold text-white mb-1">Start Practicing</h2>
           <p className="text-gray-400 text-sm mb-6">Choose a mode to begin your session</p>
@@ -65,6 +64,7 @@ const Dashboard = () => {
             {modes.map(({ id, icon: Icon, title, desc, color }, i) => (
               <motion.button
                 key={id}
+                onClick={() => navigate(`/practice/${id}`)}
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35, delay: i * 0.06 }}
@@ -86,7 +86,6 @@ const Dashboard = () => {
           </div>
         </section>
 
-        {/* Progress summary — secondary */}
         <section id="progress" className="scroll-mt-32">
           <h2 className="text-xl font-bold text-white mb-1">Your Progress</h2>
           <p className="text-gray-400 text-sm mb-6">A quick look at how you're doing</p>
