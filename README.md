@@ -54,14 +54,10 @@ SpeakReady is an AI-powered English communication and interview practice platfor
 
 ![feedback](frontend/src/assets/feedback.png)
 
-##  Getting Started
 
-```bash
-git clone <repository-url>
-cd speakready
-npm install
-npm run dev
-```
+## how to run
+fronten:npm run dev
+backend:node server.js
 
 
 
