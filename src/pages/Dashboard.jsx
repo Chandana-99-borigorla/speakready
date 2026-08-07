@@ -1,12 +1,29 @@
 // src/pages/Dashboard.jsx
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Mic, MessageSquare, Presentation, Coffee, TrendingUp, Flame, Clock, Award } from 'lucide-react'
+import API from '../api/axios' // adjust path to your axios instance
 
 const Dashboard = () => {
   const navigate = useNavigate()
   const [activeSection, setActiveSection] = useState('practice')
+  const [progress, setProgress] = useState(null)
+  const [loadingProgress, setLoadingProgress] = useState(true)
+
+  useEffect(() => {
+    const fetchProgress = async () => {
+      try {
+        const res = await API.get('/progress')
+        setProgress(res.data)
+      } catch (err) {
+        console.error('Failed to load progress:', err)
+      } finally {
+        setLoadingProgress(false)
+      }
+    }
+    fetchProgress()
+  }, [])
 
   const scrollTo = (id) => {
     setActiveSection(id)
@@ -20,11 +37,25 @@ const Dashboard = () => {
     { id: 'conversation', icon: Coffee, title: 'Everyday Conversation', desc: 'Speak naturally, no script', color: 'cyan' },
   ]
 
+  const getBestMode = () => {
+    if (!progress?.byMode) return '—'
+    let best = null
+    let bestAvg = -1
+    for (const [mode, data] of Object.entries(progress.byMode)) {
+      const avg = data.totalScore / data.count
+      if (avg > bestAvg) {
+        bestAvg = avg
+        best = mode
+      }
+    }
+    return best || '—'
+  }
+
   const stats = [
     { icon: Flame, label: 'Day Streak', value: '0' },
-    { icon: Clock, label: 'Sessions Done', value: '0' },
-    { icon: TrendingUp, label: 'Avg Fluency Score', value: '—' },
-    { icon: Award, label: 'Best Mode', value: '—' },
+    { icon: Clock, label: 'Sessions Done', value: loadingProgress ? '...' : String(progress?.totalSessions ?? 0) },
+    { icon: TrendingUp, label: 'Avg Fluency Score', value: loadingProgress ? '...' : String(progress?.avgScore ?? '—') },
+    { icon: Award, label: 'Best Mode', value: loadingProgress ? '...' : getBestMode() },
   ]
 
   return (

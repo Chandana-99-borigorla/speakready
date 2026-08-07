@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
+import API from '../api/axios' // 👈 update this path if your axios.js file lives elsewhere
 
 const Practice = () => {
   const { mode } = useParams()
@@ -11,6 +11,7 @@ const Practice = () => {
   const [inputType, setInputType] = useState(null)
   const [userText, setUserText] = useState('')
   const [feedback, setFeedback] = useState('')
+  const [score, setScore] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [isRecording, setIsRecording] = useState(false)
@@ -25,7 +26,7 @@ const Practice = () => {
     setTopicSubmitted(true)
     setLoadingQuestion(true)
     try {
-      const res = await axios.get(`http://localhost:5000/api/practice/question/${mode}`, {
+      const res = await API.get(`/practice/question/${mode}`, {
         params: { topic }
       })
       setQuestion(res.data.question)
@@ -71,41 +72,46 @@ const Practice = () => {
     setLoading(true)
     setError('')
     setFeedback('')
+    setScore(null)
     try {
-      const res = await axios.post('http://localhost:5000/api/practice/feedback', {
+      const res = await API.post('/practice/feedback', {
         mode,
         question,
         userText
       })
       setFeedback(res.data.feedback)
+      setScore(res.data.score)
     } catch (err) {
       setError('Failed to get feedback. Please try again.')
     } finally {
       setLoading(false)
     }
   }
+
   const nextQuestion = async () => {
-  setInputType(null)
-  setUserText('')
-  setFeedback('')
-  setError('')
-  setLoadingQuestion(true)
-  try {
-    const res = await axios.get(`http://localhost:5000/api/practice/question/${mode}`, {
-      params: { topic }
-    })
-    setQuestion(res.data.question)
-  } catch (err) {
-    setError('Failed to load next question. Please try again.')
-  } finally {
-    setLoadingQuestion(false)
+    setInputType(null)
+    setUserText('')
+    setFeedback('')
+    setScore(null)
+    setError('')
+    setLoadingQuestion(true)
+    try {
+      const res = await API.get(`/practice/question/${mode}`, {
+        params: { topic }
+      })
+      setQuestion(res.data.question)
+    } catch (err) {
+      setError('Failed to load next question. Please try again.')
+    } finally {
+      setLoadingQuestion(false)
+    }
   }
-}
 
   const reset = () => {
     setInputType(null)
     setUserText('')
     setFeedback('')
+    setScore(null)
     setError('')
   }
 
@@ -115,7 +121,6 @@ const Practice = () => {
     setQuestion('')
     reset()
   }
-  
 
   return (
     <div className="min-h-screen bg-[#0B0F19] flex flex-col items-center pt-20 px-4">
@@ -218,17 +223,18 @@ const Practice = () => {
 
               {feedback && (
                 <div className="mt-6 p-4 bg-[#151A28] rounded-lg border border-gray-700">
-                  <h2 className="text-white font-semibold mb-2">AI Feedback</h2>
+                  <h2 className="text-white font-semibold mb-2">
+                    AI Feedback {score !== null && <span className="text-blue-400">— Score: {score}/100</span>}
+                  </h2>
                   <p className="text-gray-300">{feedback}</p>
-                   <button
-      onClick={nextQuestion}
-      className="mt-4 w-full py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
-    >
-      Next Question →
-    </button>
+                  <button
+                    onClick={nextQuestion}
+                    className="mt-4 w-full py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                  >
+                    Next Question →
+                  </button>
                 </div>
               )}
-              
             </div>
           )}
         </>
