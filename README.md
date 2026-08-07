@@ -63,7 +63,7 @@ npm install
 npm run dev
 ```
 
-Create a `.env` file and add the required environment variables before running the application.
+
 
 ##  Project Structure
 
