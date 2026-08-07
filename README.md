@@ -39,20 +39,20 @@ SpeakReady is an AI-powered English communication and interview practice platfor
 ##  Screenshots
 
 ### Home Page
-![Home](frontend/src/assets/home.png)
+![Home](src/assets/home.png)
 
 ### Dashboard
 
-![Dashboard](frontend/src/assets/dashboard.png)
+![Dashboard](src/assets/dashboard.png)
 
 
 ### AI Conversation
-![generation](frontend/src/assets/generate.png)
+![generation](src/assets/generate.png)
 
 
 ### Progress Tracking
 
-![feedback](frontend/src/assets/feedback.png)
+![feedback](src/assets/feedback.png)
 
 
 ## how to run
