@@ -1,16 +1,77 @@
-# React + Vite
+#  SpeakReady
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+SpeakReady is an AI-powered English communication and interview practice platform that helps users improve their speaking confidence through interactive AI conversations and personalized feedback.
 
-Currently, two official plugins are available:
+##  Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+*  Secure User Authentication
+*  AI-Powered Conversation Practice
+*  Interview Preparation
+*  Progress Tracking
+*  Session History
+*  RESTful API Architecture
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Frontend**
 
-## Expanding the Oxlint configuration
+* React.js
+* Tailwind CSS
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+**Backend**
+
+* Node.js
+* Express.js
+
+**Database**
+
+* MongoDB
+
+**Authentication**
+
+* JWT
+* bcrypt
+
+**AI**
+
+* OpenRouter API
+
+##  Screenshots
+
+### Home Page
+![Home](frontend/src/assets/home.png)
+
+### Dashboard
+
+![Dashboard](frontend/src/assets/dashboard.png)
+
+
+### AI Conversation
+![generation](frontend/src/assets/generate.png)
+
+
+### Progress Tracking
+
+![feedback](frontend/src/assets/feedback.png)
+
+##  Getting Started
+
+```bash
+git clone <repository-url>
+cd speakready
+npm install
+npm run dev
+```
+
+Create a `.env` file and add the required environment variables before running the application.
+
+##  Project Structure
+
+```text
+speakready/
+├── frontend/
+├── backend/
+└── README.md
+```
+
+
